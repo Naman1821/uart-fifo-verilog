@@ -1,0 +1,14 @@
+# Yosys synthesis script: generic gate-level synthesis + area report.
+# Run from the repo root:   yosys -s synth/synth.ys      (or: make synth)
+
+read_verilog rtl/baud_gen.v rtl/uart_tx.v rtl/uart_rx.v rtl/sync_fifo.v rtl/uart_top.v
+hierarchy -check -top uart_top
+synth -top uart_top -flatten
+check -assert
+tee -o synth/area_report.txt stat
+
+# FPGA view of the same design (Lattice iCE40): LUT and flip-flop count
+design -reset
+read_verilog rtl/baud_gen.v rtl/uart_tx.v rtl/uart_rx.v rtl/sync_fifo.v rtl/uart_top.v
+synth_ice40 -top uart_top
+tee -o synth/ice40_report.txt stat

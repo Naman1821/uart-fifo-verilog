@@ -1,0 +1,8 @@
+sim_build/
+results.xml
+*.result.xml
+*.fst
+*.vcd
+.pytest_cache/
+__pycache__/
+synth/*_report.txt
